@@ -164,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequestPopular);
     }
     @Override

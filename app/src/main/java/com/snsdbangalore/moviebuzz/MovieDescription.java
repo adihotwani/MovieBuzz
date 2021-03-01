@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
@@ -30,7 +31,7 @@ import java.util.Map;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MovieDescription extends AppCompatActivity {
-    String url;
+    String url,id;
     TextView title,language,vote,popularity,release,releaseStatus,overView;
     ImageView imgPoster;
     Button cast,review;
@@ -39,10 +40,13 @@ public class MovieDescription extends AppCompatActivity {
     RecyclerView.LayoutManager gridLayoutProduction = new GridLayoutManager(this,3);
     RecyclerView.LayoutManager gridLayoutSimilar = new GridLayoutManager(this,3);
 
-
+    RequestQueue requestQueue;
 
     ArrayList<String> ProductionIMG = new ArrayList<String>();
     ArrayList<String> ProductionTitle = new ArrayList<String>();
+    ArrayList<String> SimilarMoviesIMG = new ArrayList<String>();
+    ArrayList<String> SimilarMoviesTitle = new ArrayList<String>();
+    ArrayList<String> SimilarMoviesIds = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,8 @@ public class MovieDescription extends AppCompatActivity {
         rvProduction = findViewById(R.id.recycler_inside_production);
         rvSimilar = findViewById(R.id.recycler_similar_movies);
 
-        url = "https://api.themoviedb.org/3/movie/"+intent.getStringExtra("id")+"?api_key=7de7c3b1f16e07ca7b623cf99e25e505";
+        id = intent.getStringExtra("id");
+        url = "https://api.themoviedb.org/3/movie/"+id+"?api_key=7de7c3b1f16e07ca7b623cf99e25e505";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -85,14 +90,12 @@ public class MovieDescription extends AppCompatActivity {
                     Glide.with(getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+jsonObject.getString("poster_path")).into(imgPoster);
 
                     JSONArray jsonProd = jsonObject.getJSONArray("production_companies");
-                    for(int i =0;i<jsonProd.length();i++){
-                        JSONObject prodObj = jsonProd.getJSONObject(i);
-                        ProductionIMG.add(prodObj.getString("logo_path"));
-                        ProductionTitle.add(prodObj.getString("name"));
-                    }
-                    rvProduction.setLayoutManager(gridLayoutProduction);
-                    RecyclerView.Adapter prodAdapt = new rvProdAdapter(getApplicationContext(),ProductionIMG,ProductionTitle);
-                    rvProduction.setAdapter(prodAdapt);
+
+                    prodctionDisplay(jsonProd);
+
+
+                    similarDisplay();
+
                 }catch (JSONException e){
 
                 }
@@ -104,7 +107,67 @@ public class MovieDescription extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Something Went Wrong", LENGTH_LONG).show();
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
+    }
+    void prodctionDisplay(JSONArray jsonArray){
+        for(int i =0;i<jsonArray.length();i++){
+            JSONObject prodObj = null;
+            try {
+                prodObj = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                ProductionIMG.add(prodObj.getString("logo_path"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                ProductionTitle.add(prodObj.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        rvProduction.setLayoutManager(gridLayoutProduction);
+        RecyclerView.Adapter prodAdapt = new rvProdAdapter(getApplicationContext(),ProductionIMG,ProductionTitle);
+        rvProduction.setAdapter(prodAdapt);
+    }
+    void similarDisplay(){
+        String similarLink = "https://api.themoviedb.org/3/movie/"+id+"/similar?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page=1";
+        StringRequest similarMoviesRequest = new StringRequest(Request.Method.GET, similarLink, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject similarObject = new JSONObject(String.valueOf(response));
+                    JSONArray similarArray = similarObject.getJSONArray("results");
+                    for(int i=0;i<similarArray.length();i++){
+                        JSONObject similarMoviesObject = similarArray.getJSONObject(i);
+                        SimilarMoviesIMG.add(similarMoviesObject.getString("poster_path"));
+                        SimilarMoviesTitle.add(similarMoviesObject.getString("original_title"));
+                        SimilarMoviesIds.add(similarMoviesObject.getString("id"));
+                    }
+                    rvSimilar.setLayoutManager(gridLayoutSimilar);
+                    rvSimilarMoviesAdapter similarMoviesAdapter = new rvSimilarMoviesAdapter(getApplicationContext(),SimilarMoviesIMG,SimilarMoviesTitle,SimilarMoviesIds);
+                    rvSimilar.setAdapter(similarMoviesAdapter);
+                    similarMoviesAdapter.setOnItemClickListener(new rvSimilarMoviesAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(MovieDescription.this,MovieDescription.class);
+                            intent.putExtra("id",SimilarMoviesIds.get(position));
+                            startActivity(intent);
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(similarMoviesRequest);
     }
 }

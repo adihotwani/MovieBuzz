@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="-6dp">
+        tools:layout_editor_absoluteY="-6dp"
+        android:layout_marginBottom="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,8 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recycler_similar_movies"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"/>
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
