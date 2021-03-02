@@ -1,0 +1,29 @@
+Features - Shows now showing movies
+           shows most popular movies
+           shows the details of movies
+           shows the cast of movies
+           shows the production houses
+           shows similar movies and its details
+           its size efficient
+           made using the website api THE MOVIE DATABASE
+           
+Decisions - fetch api using volley
+            display images using glide
+            display the lists and grids using recyclerView to make app efficient
+            to make it faster and smoother
+            viewpager for auto sliding 
+            to learn and visualize
+            to use less activites and display more data
+            to submit on time
+            to learn from own mistakes
+            adapt a broader vision to learn more
+           
+Assumptions - find apis according to question
+              find the data and fetch using java class
+              create activities more attractive
+              create an easy functioning app
+              add all the features and make it work
+              can use new methods to make it work
+              create only 3-4 acivities
+              learn more and more
+              
