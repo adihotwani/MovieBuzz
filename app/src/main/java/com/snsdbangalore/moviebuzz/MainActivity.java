@@ -27,7 +27,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    //Button buttonPrev,buttonNext;
 
     final ArrayList<String> ids = new ArrayList<String>();
     final ArrayList<String> name = new ArrayList<String>();
