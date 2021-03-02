@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    app:cardCornerRadius="12dp"
     android:layout_margin="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:padding="10dp"
+    app:cardCornerRadius="12dp">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,30 +18,32 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@drawable/ic_launcher_background" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:textStyle="bold"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:id="@+id/titleCast"
-            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:textSize="15dp"/>
+            android:layout_marginRight="5dp"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/characterCast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Character"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/characterCast"
-            android:textColor="@color/black"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:textSize="15dp"/>
+            android:layout_marginRight="5dp"
+            android:text="Character"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
 
 
     </LinearLayout>

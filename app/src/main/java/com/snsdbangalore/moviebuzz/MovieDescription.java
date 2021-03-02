@@ -32,14 +32,14 @@ import java.util.Map;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MovieDescription extends AppCompatActivity {
-    String url,id;
-    TextView title,language,vote,popularity,release,releaseStatus,overView;
+    String url, id;
+    TextView title, language, vote, popularity, release, releaseStatus, overView;
     ImageView imgPoster;
-    Button cast,review;
-    RecyclerView rvProduction,rvSimilar;
+    Button cast, review;
+    RecyclerView rvProduction, rvSimilar;
 
-    RecyclerView.LayoutManager gridLayoutProduction = new GridLayoutManager(this,3);
-    RecyclerView.LayoutManager gridLayoutSimilar = new GridLayoutManager(this,3);
+    RecyclerView.LayoutManager gridLayoutProduction = new GridLayoutManager(this, 3);
+    RecyclerView.LayoutManager gridLayoutSimilar = new GridLayoutManager(this, 3);
 
     RequestQueue requestQueue;
 
@@ -48,6 +48,7 @@ public class MovieDescription extends AppCompatActivity {
     ArrayList<String> SimilarMoviesIMG = new ArrayList<String>();
     ArrayList<String> SimilarMoviesTitle = new ArrayList<String>();
     ArrayList<String> SimilarMoviesIds = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MovieDescription extends AppCompatActivity {
         rvSimilar = findViewById(R.id.recycler_similar_movies);
 
         id = intent.getStringExtra("id");
-        url = "https://api.themoviedb.org/3/movie/"+id+"?api_key=7de7c3b1f16e07ca7b623cf99e25e505";
+        url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=7de7c3b1f16e07ca7b623cf99e25e505";
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -88,7 +89,7 @@ public class MovieDescription extends AppCompatActivity {
                     releaseStatus.setText(jsonObject.getString("status"));
                     overView.setText(jsonObject.getString("overview"));
 
-                    Glide.with(getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+jsonObject.getString("poster_path")).into(imgPoster);
+                    Glide.with(getApplicationContext()).load("https://image.tmdb.org/t/p/w500" + jsonObject.getString("poster_path")).into(imgPoster);
 
                     JSONArray jsonProd = jsonObject.getJSONArray("production_companies");
 
@@ -96,7 +97,7 @@ public class MovieDescription extends AppCompatActivity {
 
                     similarDisplay();
 
-                }catch (JSONException e){
+                } catch (JSONException e) {
 
                 }
 
@@ -104,7 +105,7 @@ public class MovieDescription extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Something Went Wrong", LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Something Went Wrong", LENGTH_LONG).show();
             }
         });
         requestQueue = Volley.newRequestQueue(this);
@@ -113,9 +114,9 @@ public class MovieDescription extends AppCompatActivity {
         cast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent castIntent = new Intent(getApplicationContext(),cast_review_display.class);
-                castIntent.putExtra("check","Casts");
-                castIntent.putExtra("id",id);
+                Intent castIntent = new Intent(getApplicationContext(), cast_review_display.class);
+                castIntent.putExtra("check", "Casts");
+                castIntent.putExtra("id", id);
                 startActivity(castIntent);
             }
         });
@@ -123,15 +124,16 @@ public class MovieDescription extends AppCompatActivity {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent reviewIntent = new Intent(getApplicationContext(),cast_review_display.class);
-                reviewIntent.putExtra("check","Reviews");
-                reviewIntent.putExtra("id",id);
+                Intent reviewIntent = new Intent(getApplicationContext(), cast_review_display.class);
+                reviewIntent.putExtra("check", "Reviews");
+                reviewIntent.putExtra("id", id);
                 startActivity(reviewIntent);
             }
         });
     }
-    void prodctionDisplay(JSONArray jsonArray){
-        for(int i =0;i<jsonArray.length();i++){
+
+    void prodctionDisplay(JSONArray jsonArray) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject prodObj = null;
             try {
                 prodObj = jsonArray.getJSONObject(i);
@@ -150,31 +152,32 @@ public class MovieDescription extends AppCompatActivity {
             }
         }
         rvProduction.setLayoutManager(gridLayoutProduction);
-        RecyclerView.Adapter prodAdapt = new rvProdAdapter(getApplicationContext(),ProductionIMG,ProductionTitle);
+        RecyclerView.Adapter prodAdapt = new rvProdAdapter(getApplicationContext(), ProductionIMG, ProductionTitle);
         rvProduction.setAdapter(prodAdapt);
     }
-    void similarDisplay(){
-        String similarLink = "https://api.themoviedb.org/3/movie/"+id+"/similar?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page=1";
+
+    void similarDisplay() {
+        String similarLink = "https://api.themoviedb.org/3/movie/" + id + "/similar?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page=1";
         StringRequest similarMoviesRequest = new StringRequest(Request.Method.GET, similarLink, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject similarObject = new JSONObject(String.valueOf(response));
                     JSONArray similarArray = similarObject.getJSONArray("results");
-                    for(int i=0;i<similarArray.length();i++){
+                    for (int i = 0; i < similarArray.length(); i++) {
                         JSONObject similarMoviesObject = similarArray.getJSONObject(i);
                         SimilarMoviesIMG.add(similarMoviesObject.getString("poster_path"));
                         SimilarMoviesTitle.add(similarMoviesObject.getString("original_title"));
                         SimilarMoviesIds.add(similarMoviesObject.getString("id"));
                     }
                     rvSimilar.setLayoutManager(gridLayoutSimilar);
-                    rvSimilarMoviesAdapter similarMoviesAdapter = new rvSimilarMoviesAdapter(getApplicationContext(),SimilarMoviesIMG,SimilarMoviesTitle,SimilarMoviesIds);
+                    rvSimilarMoviesAdapter similarMoviesAdapter = new rvSimilarMoviesAdapter(getApplicationContext(), SimilarMoviesIMG, SimilarMoviesTitle, SimilarMoviesIds);
                     rvSimilar.setAdapter(similarMoviesAdapter);
                     similarMoviesAdapter.setOnItemClickListener(new rvSimilarMoviesAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
-                            Intent intent = new Intent(MovieDescription.this,MovieDescription.class);
-                            intent.putExtra("id",SimilarMoviesIds.get(position));
+                            Intent intent = new Intent(MovieDescription.this, MovieDescription.class);
+                            intent.putExtra("id", SimilarMoviesIds.get(position));
                             startActivity(intent);
                         }
                     });

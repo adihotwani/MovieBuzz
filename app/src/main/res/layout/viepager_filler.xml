@@ -22,12 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="@id/image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="50dp"
         android:text="Title"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -35,11 +35,11 @@
         android:id="@+id/release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:text="Release Date"
         android:textColor="@color/black"
         android:textSize="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 

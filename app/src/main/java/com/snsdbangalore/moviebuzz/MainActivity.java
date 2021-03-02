@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,30 +69,29 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler();
 
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabLayout tabDots = findViewById(R.id.tabDots);
-        tabDots.setupWithViewPager(viewPager,true);
+        tabDots.setupWithViewPager(viewPager, true);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(true);
 
 
-
-        StringRequest stringRequestNowPlaying = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/movie/now_playing?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page="+String.valueOf(PageNumber), new Response.Listener<String>() {
+        StringRequest stringRequestNowPlaying = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/movie/now_playing?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page=" + String.valueOf(PageNumber), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
                     JSONArray array = object.getJSONArray("results");
-                    for(int i=0;i<array.length();i++){
+                    for (int i = 0; i < array.length(); i++) {
                         JSONObject jsonObject = array.getJSONObject(i);
                         ids.add(jsonObject.getString("id"));
                         name.add(jsonObject.getString("original_title"));
                         pictures.add(jsonObject.getString("backdrop_path"));
                         release.add(jsonObject.getString("release_date"));
                     }
-                    viewPagerAdapter = new viewPagerAdapter(MainActivity.this,ids,name,pictures,release);
+                    viewPagerAdapter = new viewPagerAdapter(MainActivity.this, ids, name, pictures, release);
                     viewPager.setAdapter(viewPagerAdapter);
                     viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
@@ -126,31 +124,31 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequestNowPlaying);
 
 
-        StringRequest stringRequestPopular = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/movie/popular?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page="+String.valueOf(PageNumber), new Response.Listener<String>() {
+        StringRequest stringRequestPopular = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/movie/popular?api_key=7de7c3b1f16e07ca7b623cf99e25e505&page=" + String.valueOf(PageNumber), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try{
-                   JSONObject popularJsonObject = new JSONObject(response);
-                   JSONArray popularJsonArrat = popularJsonObject.getJSONArray("results");
-                   for(int j=0;j<popularJsonArrat.length();j++){
-                       JSONObject popularMoviesObject = popularJsonArrat.getJSONObject(j);
-                       idsPopular.add(popularMoviesObject.getString("id"));
-                       namePopular.add(popularMoviesObject.getString("original_title"));
-                       picturesPopular.add(popularMoviesObject.getString("poster_path"));
-                       releasePopular.add(popularMoviesObject.getString("release_date"));
-                       votesPopular.add(popularMoviesObject.getString("vote_average"));
-                       languagePopular.add(popularMoviesObject.getString("original_language"));
-                   }
+                try {
+                    JSONObject popularJsonObject = new JSONObject(response);
+                    JSONArray popularJsonArrat = popularJsonObject.getJSONArray("results");
+                    for (int j = 0; j < popularJsonArrat.length(); j++) {
+                        JSONObject popularMoviesObject = popularJsonArrat.getJSONObject(j);
+                        idsPopular.add(popularMoviesObject.getString("id"));
+                        namePopular.add(popularMoviesObject.getString("original_title"));
+                        picturesPopular.add(popularMoviesObject.getString("poster_path"));
+                        releasePopular.add(popularMoviesObject.getString("release_date"));
+                        votesPopular.add(popularMoviesObject.getString("vote_average"));
+                        languagePopular.add(popularMoviesObject.getString("original_language"));
+                    }
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                    recyclerHomeAdapter homeAdapter = new recyclerHomeAdapter(getApplicationContext(),idsPopular,namePopular,picturesPopular,releasePopular,votesPopular,languagePopular);
+                    recyclerHomeAdapter homeAdapter = new recyclerHomeAdapter(getApplicationContext(), idsPopular, namePopular, picturesPopular, releasePopular, votesPopular, languagePopular);
 
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(homeAdapter);
                     homeAdapter.setOnItemClickListener(new recyclerHomeAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
-                            Intent intent = new Intent(MainActivity.this,MovieDescription.class);
-                            intent.putExtra("id",idsPopular.get(position));
+                            Intent intent = new Intent(MainActivity.this, MovieDescription.class);
+                            intent.putExtra("id", idsPopular.get(position));
                             startActivity(intent);
                         }
                     });
@@ -166,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(stringRequestPopular);
     }
+
     @Override
     protected void onResume() {
         super.onResume();

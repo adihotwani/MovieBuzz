@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="12dp"
-    android:layout_marginTop="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="12dp">
 
-    <ImageView
-        android:id="@+id/img_poster_in_rv"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.25" />
-
-    <TextView
-        android:id="@+id/rv_tite_home"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="5dp">
 
-    <TextView
-        android:id="@+id/rv_vote_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vote"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
-        app:layout_constraintTop_toBottomOf="@+id/rv_tite_home" />
+        <ImageView
+            android:id="@+id/img_poster_in_rv"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.25" />
 
-    <TextView
-        android:id="@+id/rv_language_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Language"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
-        app:layout_constraintTop_toBottomOf="@+id/rv_vote_home" />
+        <TextView
+            android:id="@+id/rv_tite_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/rv_release_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Release"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
-        app:layout_constraintTop_toBottomOf="@+id/rv_language_home" />
+        <TextView
+            android:id="@+id/rv_vote_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Vote"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
+            app:layout_constraintTop_toBottomOf="@+id/rv_tite_home" />
+
+        <TextView
+            android:id="@+id/rv_language_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Language"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
+            app:layout_constraintTop_toBottomOf="@+id/rv_vote_home" />
+
+        <TextView
+            android:id="@+id/rv_release_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Release"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_in_rv"
+            app:layout_constraintTop_toBottomOf="@+id/rv_language_home" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
