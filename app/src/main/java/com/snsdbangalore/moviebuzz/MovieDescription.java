@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -93,7 +94,6 @@ public class MovieDescription extends AppCompatActivity {
 
                     prodctionDisplay(jsonProd);
 
-
                     similarDisplay();
 
                 }catch (JSONException e){
@@ -109,6 +109,26 @@ public class MovieDescription extends AppCompatActivity {
         });
         requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
+
+        cast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent castIntent = new Intent(getApplicationContext(),cast_review_display.class);
+                castIntent.putExtra("check","Casts");
+                castIntent.putExtra("id",id);
+                startActivity(castIntent);
+            }
+        });
+
+        review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent reviewIntent = new Intent(getApplicationContext(),cast_review_display.class);
+                reviewIntent.putExtra("check","Reviews");
+                reviewIntent.putExtra("id",id);
+                startActivity(reviewIntent);
+            }
+        });
     }
     void prodctionDisplay(JSONArray jsonArray){
         for(int i =0;i<jsonArray.length();i++){
